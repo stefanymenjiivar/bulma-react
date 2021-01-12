@@ -2,9 +2,10 @@
 
 import React, { useCallback, useState } from 'react';
 import Navbar from './Component/Navbar';
+import TableDisability from './Component/TableDisability';
 import TableEmployee from './Component/TableEmployee';
 
-const menuOptions = ['Agregar incapacidad', 'Gestionar empleados'];
+const menuOptions = ['Create disability', 'Manage employee'];
 
 function App() {
   const [optionSelected, setOptionSelected] = useState(-1);
@@ -13,7 +14,7 @@ function App() {
   let innerContent = null;
   switch (optionSelected) {
     case 0:
-      innerContent = <h1>Hello</h1>;
+      innerContent = <TableDisability></TableDisability>;
       break;
     case 1:
       innerContent = <TableEmployee></TableEmployee>;
