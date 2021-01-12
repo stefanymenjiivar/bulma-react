@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import ModalEmployee from './ModalEmployee';
 
 const data = [
   {
@@ -29,6 +30,7 @@ const data = [
 
 const TableEmployee = () => {
   const [employeeList, setEmployeeList] = useState([]);
+  const [componentEmployee, setComponentEmployee] = useState(null);
 
   const deleteEmployee = useCallback(
     (employee) => () => {
@@ -36,12 +38,25 @@ const TableEmployee = () => {
     },
     []
   );
+
   const updateEmployee = useCallback(
     (employee) => () => {
-      console.log(employee, 'update');
+      setComponentEmployee(
+        <ModalEmployee isUpdate={true} employee={employee} setComponentEmployee={setComponentEmployee} />
+      );
     },
     []
   );
+
+  const createEmployee = useCallback(() => {
+    setComponentEmployee(
+      <ModalEmployee
+        isUpdate={false}
+        employee={{ id: '', username: '', code: '', startDate: Date.now(), dui: '', position: '' }}
+        setComponentEmployee={setComponentEmployee}
+      />
+    );
+  }, []);
 
   useEffect(() => {
     setEmployeeList(
@@ -51,7 +66,7 @@ const TableEmployee = () => {
           <tr key={id}>
             <td>{username}</td>
             <td>{code}</td>
-            <td>{new Date(startDate).toDateString()}</td>
+            <td>{new Date(startDate).toLocaleString()}</td>
             <td>{dui}</td>
             <td>{position}</td>
             <td>
@@ -75,19 +90,28 @@ const TableEmployee = () => {
   }, [deleteEmployee, updateEmployee]);
 
   return (
-    <table className='table is-fullwidth is-hoverable'>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Code</th>
-          <th>Start Date</th>
-          <th>DUI</th>
-          <th>Position</th>
-          <th>Config</th>
-        </tr>
-      </thead>
-      <tbody>{employeeList}</tbody>
-    </table>
+    <>
+      <div className='buttons'>
+        <button onClick={createEmployee} className='button is-link'>
+          Create Employee
+        </button>
+      </div>
+
+      <table className='table is-fullwidth is-hoverable'>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Code</th>
+            <th>Start Date</th>
+            <th>DUI</th>
+            <th>Position</th>
+            <th>Config</th>
+          </tr>
+        </thead>
+        <tbody>{employeeList}</tbody>
+      </table>
+      {componentEmployee}
+    </>
   );
 };
 

@@ -10,7 +10,7 @@ function App() {
   const [optionSelected, setOptionSelected] = useState(-1);
 
   const setActiveOption = useCallback((key) => (event) => setOptionSelected(key), []);
-  let innerContent = <></>;
+  let innerContent = null;
   switch (optionSelected) {
     case 0:
       innerContent = <h1>Hello</h1>;
@@ -19,7 +19,7 @@ function App() {
       innerContent = <TableEmployee></TableEmployee>;
       break;
     default:
-      innerContent = <></>;
+      innerContent = null;
   }
 
   const menu = menuOptions.map((text, key) => {
