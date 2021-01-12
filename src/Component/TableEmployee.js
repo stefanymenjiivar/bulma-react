@@ -51,7 +51,7 @@ const TableEmployee = () => {
           <tr key={id}>
             <td>{username}</td>
             <td>{code}</td>
-            <td>{startDate}</td>
+            <td>{new Date(startDate).toDateString()}</td>
             <td>{dui}</td>
             <td>{position}</td>
             <td>
