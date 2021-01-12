@@ -2,6 +2,7 @@
 
 import React, { useCallback, useState } from 'react';
 import Navbar from './Component/Navbar';
+import TableEmployee from './Component/TableEmployee';
 
 const menuOptions = ['Agregar incapacidad', 'Gestionar empleados'];
 
@@ -9,12 +10,24 @@ function App() {
   const [optionSelected, setOptionSelected] = useState(-1);
 
   const setActiveOption = useCallback((key) => (event) => setOptionSelected(key), []);
+  let innerContent = <></>;
+  switch (optionSelected) {
+    case 0:
+      innerContent = <h1>Hello</h1>;
+      break;
+    case 1:
+      innerContent = <TableEmployee></TableEmployee>;
+      break;
+    default:
+      innerContent = <></>;
+  }
 
   const menu = menuOptions.map((text, key) => {
     let classMenu = '';
     if (key === optionSelected) {
       classMenu = 'is-active';
     }
+
     return (
       <li key={key} onClick={setActiveOption(key)}>
         <a className={classMenu}>{text}</a>
@@ -34,7 +47,7 @@ function App() {
         </div>
         <div className='column'>
           <section className='section'>
-            <div className='container'></div>
+            <div className='container'>{innerContent}</div>
           </section>
         </div>
       </div>
